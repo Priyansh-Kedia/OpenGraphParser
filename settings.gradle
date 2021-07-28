@@ -1,0 +1,4 @@
+rootProject.name = "OpenGraphPreview"
+include ':app'
+include ':OpenGraphParser'
+include ':OGParser'
