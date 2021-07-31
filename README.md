@@ -23,6 +23,10 @@ Add the dependency
 
 
 
+https://user-images.githubusercontent.com/52661249/127740060-c68786b1-11e6-4a1e-87cd-879b0665886a.mp4
+
+
+
 # Implementation
 
     private val openGraphParser = OpenGraphParser(this)
