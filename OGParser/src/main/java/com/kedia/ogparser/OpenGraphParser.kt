@@ -26,14 +26,14 @@ class OpenGraphParser(
     private val OG_SITE_NAME = "og:site_name"
     private val OG_TYPE = "og:type"
 
-    private val openGraphResult = OpenGraphResult()
+    private var openGraphResult: OpenGraphResult? = null
 
     fun parse(url: String) {
         this.url = url
 
-        GlobalScope.launch {
+        GlobalScope.launch(Dispatchers.Main) {
             val result = fetchContent()
-            listener.onPostResponse(result)
+            result?.let { listener.onPostResponse(it) }
         }
 
     }
@@ -55,6 +55,7 @@ class OpenGraphParser(
             val doc = response.parse()
 
             val ogTags = doc.select(DOC_SELECT_QUERY)
+            openGraphResult = OpenGraphResult()
             when {
                 ogTags.size > 0 ->
                     ogTags.forEachIndexed { index, _ ->
@@ -62,22 +63,22 @@ class OpenGraphParser(
                         val text = tag.attr(PROPERTY)
                         when (text) {
                             OG_IMAGE -> {
-                                openGraphResult.image = (tag.attr(OPEN_GRAPH_KEY))
+                                openGraphResult!!.image = (tag.attr(OPEN_GRAPH_KEY))
                             }
                             OG_DESCRIPTION -> {
-                                openGraphResult.description = (tag.attr(OPEN_GRAPH_KEY))
+                                openGraphResult!!.description = (tag.attr(OPEN_GRAPH_KEY))
                             }
                             OG_URL -> {
-                                openGraphResult.url = (tag.attr(OPEN_GRAPH_KEY))
+                                openGraphResult!!.url = (tag.attr(OPEN_GRAPH_KEY))
                             }
                             OG_TITLE -> {
-                                openGraphResult.title = (tag.attr(OPEN_GRAPH_KEY))
+                                openGraphResult!!.title = (tag.attr(OPEN_GRAPH_KEY))
                             }
                             OG_SITE_NAME -> {
-                                openGraphResult.siteName = (tag.attr(OPEN_GRAPH_KEY))
+                                openGraphResult!!.siteName = (tag.attr(OPEN_GRAPH_KEY))
                             }
                             OG_TYPE -> {
-                                openGraphResult.type = (tag.attr(OPEN_GRAPH_KEY))
+                                openGraphResult!!.type = (tag.attr(OPEN_GRAPH_KEY))
                             }
                         }
                     }

@@ -2,6 +2,7 @@ package com.kedia.opengraphpreview
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Looper
 import android.util.Log
 import com.kedia.ogparser.OpenGraphCallback
 import com.kedia.ogparser.OpenGraphParser
@@ -17,10 +18,10 @@ class MainActivity : AppCompatActivity(), OpenGraphCallback {
     }
 
     override fun onPostResponse(openGraphResult: OpenGraphResult) {
-        Log.d("TAG", "onPostResponse: called $openGraphResult")
+        Log.d("TAG!!!!", "onPostResponse: called $openGraphResult")
     }
 
     override fun onError(error: String) {
-        Log.d("TAG", "$error")
+        Log.e("TAG!!!!", "$error")
     }
 }
