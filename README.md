@@ -1,4 +1,6 @@
 # OpenGraphParser
+[![](https://jitpack.io/v/Priyansh-Kedia/OpenGraphParser.svg)](https://jitpack.io/#Priyansh-Kedia/OpenGraphParser)
+
 
 A small and easy to use library which provides the convenience of using Open Graph Protocol in Android very easily.
 
