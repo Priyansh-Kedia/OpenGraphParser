@@ -1,10 +1,8 @@
 package com.kedia.ogparser
 
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import org.jsoup.Jsoup
+import kotlin.coroutines.CoroutineContext
 
 
 class OpenGraphParser(
@@ -30,12 +28,20 @@ class OpenGraphParser(
 
     fun parse(url: String) {
         this.url = url
+        parseLink().parse()
+    }
 
-        GlobalScope.launch(Dispatchers.Main) {
+    inner class parseLink : CoroutineScope {
+
+        private val job: Job = Job()
+        override val coroutineContext: CoroutineContext
+            get() = Dispatchers.Main + job
+
+
+        fun parse() = launch {
             val result = fetchContent()
             result?.let { listener.onPostResponse(it) }
         }
-
     }
 
     private suspend fun fetchContent() = withContext(Dispatchers.IO) {

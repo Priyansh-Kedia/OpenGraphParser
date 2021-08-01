@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity(), OpenGraphCallback {
     }
 
     override fun onPostResponse(openGraphResult: OpenGraphResult) {
-        Log.d("TAG!!!!", "onPostResponse: called $openGraphResult")
+        Log.d("TAG!!!!", "${Thread.currentThread().name}onPostResponse: called $openGraphResult")
     }
 
     override fun onError(error: String) {
