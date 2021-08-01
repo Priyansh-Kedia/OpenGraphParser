@@ -56,11 +56,11 @@ Inside `onPostResponse(openGraphResult: OpenGraphResult)` you can use the data t
 
     override fun onPostResponse(openGraphResult: OpenGraphResult) {  
     	linkPreviewLayout.apply {  
-	  	Glide.with(this@ChannelActivity).load(openGraphResult.image).into(linkImage)  
-	        linkTitle.text = openGraphResult.title  
-		linkDescription.text = openGraphResult.description  
-		website.text = openGraphResult.siteName  
-	 }}
+			Glide.with(this@ChannelActivity).load(openGraphResult.image).into(linkImage)  
+			linkTitle.text = openGraphResult.title  
+			linkDescription.text = openGraphResult.description  
+			website.text = openGraphResult.siteName  
+	 	}}
 
 
 # Contributions
