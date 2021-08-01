@@ -2,10 +2,18 @@
 [![](https://jitpack.io/v/Priyansh-Kedia/OpenGraphParser.svg)](https://jitpack.io/#Priyansh-Kedia/OpenGraphParser)
 
 
-A small and easy to use library which provides the convenience of using Open Graph Protocol in Android very easily. 
+A small and easy to use library which provides the convenience of using [Open Graph Protocol](https://ogp.me/) in Android very easily. 
 Create previews for links to share in Android very easily.
 
+
+
+
 ### Star this repo to show your support [stargazers](https://github.com/Priyansh-Kedia/OpenGraphParser/stargazers) for this repository. :star2:
+
+
+https://user-images.githubusercontent.com/52661249/127740097-51535912-6623-48ac-8a3f-7709ac9b968e.mp4
+
+
 
 Add this in your root build.gradle at the end of repositories:
 
@@ -22,11 +30,6 @@ Add the dependency
 		   implementation 'com.github.Priyansh-Kedia:OpenGraphParser:<latest_version>'
 		}
 
-
-
-
-
-https://user-images.githubusercontent.com/52661249/127740097-51535912-6623-48ac-8a3f-7709ac9b968e.mp4
 
 
 
@@ -52,15 +55,13 @@ The data class ***OpenGraphResult*** contains:
 Inside `onPostResponse(openGraphResult: OpenGraphResult)` you can use the data to show on your UI like this. 
 
     override fun onPostResponse(openGraphResult: OpenGraphResult) {  
-    linkPreviewLayout.apply {  
-	  runOnUiThread {  
-	  		  Glide.with(this@ChannelActivity).load(openGraphResult.image).into(linkImage)  
-	          	  linkTitle.text = openGraphResult.title  
-			  linkDescription.text = openGraphResult.description  
-			  website.text = openGraphResult.siteName  
-		  }  
-	 }}
-*Make sure that you run UI related stuff on the **UI Thread***.
+    	linkPreviewLayout.apply {  
+			Glide.with(this@ChannelActivity).load(openGraphResult.image).into(linkImage)  
+			linkTitle.text = openGraphResult.title  
+			linkDescription.text = openGraphResult.description  
+			website.text = openGraphResult.siteName  
+	 	}}
+
 
 # Contributions
 - Fork the repo
