@@ -91,7 +91,9 @@ class OpenGraphParser(
             }
         } catch (e: Exception) {
             e.printStackTrace()
-            listener.onError(e.localizedMessage)
+            launch(Dispatchers.Main) {
+                listener.onError(e.localizedMessage)
+            }
         }
 
         return@withContext openGraphResult
