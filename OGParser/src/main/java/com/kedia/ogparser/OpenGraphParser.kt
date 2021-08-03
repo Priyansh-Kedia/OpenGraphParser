@@ -8,7 +8,7 @@ import kotlin.coroutines.CoroutineContext
 
 class OpenGraphParser(
     private val listener: OpenGraphCallback,
-    private var showNullOnEmpty: Boolean = true
+    private var showNullOnEmpty: Boolean = false
 ) {
 
     private var url: String = ""
@@ -42,7 +42,10 @@ class OpenGraphParser(
 
         fun parse() = launch {
             val result = fetchContent()
-            result?.let { listener.onPostResponse(it) }
+            result?.let {
+                Log.d("TAG!!!!", "called here from thread ${Thread.currentThread().name}")
+                listener.onPostResponse(it)
+            }
         }
     }
 
@@ -100,8 +103,12 @@ class OpenGraphParser(
             return@withContext null
         }
 
+        Log.d("TAG!!!!", openGraphResult.toString())
+
         if (openGraphResult!!.title.isEmpty() && openGraphResult!!.description.isEmpty() && showNullOnEmpty) {
-            listener.onError("Null or empty response from the server")
+            launch(Dispatchers.Main) {
+                listener.onError("Null or empty response from the server")
+            }
             return@withContext null
         }
 

@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity(), OpenGraphCallback {
         setContentView(R.layout.activity_main)
 
         val openGraphParser = OpenGraphParser(this)
-        openGraphParser.parse("https://www.you")
+        openGraphParser.parse("https://www.youtube.com")
     }
 
     override fun onPostResponse(openGraphResult: OpenGraphResult) {
@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity(), OpenGraphCallback {
     }
 
     override fun onError(error: String) {
-        tview.text = error
         Log.e("TAG!!!!", "$error")
+        tview.text = error
     }
 }
