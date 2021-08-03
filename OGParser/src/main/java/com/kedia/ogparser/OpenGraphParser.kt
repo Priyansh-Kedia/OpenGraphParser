@@ -1,12 +1,14 @@
 package com.kedia.ogparser
 
+import android.util.Log
 import kotlinx.coroutines.*
 import org.jsoup.Jsoup
 import kotlin.coroutines.CoroutineContext
 
 
 class OpenGraphParser(
-    private val listener: OpenGraphCallback
+    private val listener: OpenGraphCallback,
+    private var showNullOnEmpty: Boolean = true
 ) {
 
     private var url: String = ""
@@ -49,6 +51,7 @@ class OpenGraphParser(
             url = "http://$url"
         }
 
+        openGraphResult = OpenGraphResult()
         try {
             val response = Jsoup.connect(url)
                 .ignoreContentType(true)
@@ -61,12 +64,12 @@ class OpenGraphParser(
             val doc = response.parse()
 
             val ogTags = doc.select(DOC_SELECT_QUERY)
-            openGraphResult = OpenGraphResult()
             when {
                 ogTags.size > 0 ->
                     ogTags.forEachIndexed { index, _ ->
                         val tag = ogTags[index]
                         val text = tag.attr(PROPERTY)
+
                         when (text) {
                             OG_IMAGE -> {
                                 openGraphResult!!.image = (tag.attr(OPEN_GRAPH_KEY))
@@ -94,6 +97,12 @@ class OpenGraphParser(
             launch(Dispatchers.Main) {
                 listener.onError(e.localizedMessage)
             }
+            return@withContext null
+        }
+
+        if (openGraphResult!!.title.isEmpty() && openGraphResult!!.description.isEmpty() && showNullOnEmpty) {
+            listener.onError("Null or empty response from the server")
+            return@withContext null
         }
 
         return@withContext openGraphResult

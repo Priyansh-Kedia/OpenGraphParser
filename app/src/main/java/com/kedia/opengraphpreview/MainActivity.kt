@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity(), OpenGraphCallback {
         setContentView(R.layout.activity_main)
 
         val openGraphParser = OpenGraphParser(this)
-        openGraphParser.parse("https://www.youtube.com/watch?v=RRlgbXUMKt8")
+        openGraphParser.parse("https://www.you")
     }
 
     override fun onPostResponse(openGraphResult: OpenGraphResult) {
