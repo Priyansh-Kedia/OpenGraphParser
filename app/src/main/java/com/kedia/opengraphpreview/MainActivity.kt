@@ -7,6 +7,7 @@ import android.util.Log
 import com.kedia.ogparser.OpenGraphCallback
 import com.kedia.ogparser.OpenGraphParser
 import com.kedia.ogparser.OpenGraphResult
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), OpenGraphCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,10 +19,11 @@ class MainActivity : AppCompatActivity(), OpenGraphCallback {
     }
 
     override fun onPostResponse(openGraphResult: OpenGraphResult) {
-        Log.d("TAG!!!!", "${Thread.currentThread().name}onPostResponse: called $openGraphResult")
+        tview.text = openGraphResult.toString()
     }
 
     override fun onError(error: String) {
+        tview.text = error
         Log.e("TAG!!!!", "$error")
     }
 }
