@@ -43,7 +43,6 @@ class OpenGraphParser(
         fun parse() = launch {
             val result = fetchContent()
             result?.let {
-                Log.d("TAG!!!!", "called here from thread ${Thread.currentThread().name}")
                 listener.onPostResponse(it)
             }
         }
@@ -102,8 +101,6 @@ class OpenGraphParser(
             }
             return@withContext null
         }
-
-        Log.d("TAG!!!!", openGraphResult.toString())
 
         if (openGraphResult!!.title.isEmpty() && openGraphResult!!.description.isEmpty() && showNullOnEmpty) {
             launch(Dispatchers.Main) {
