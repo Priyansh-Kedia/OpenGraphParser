@@ -102,7 +102,7 @@ class OpenGraphParser(
             return@withContext null
         }
 
-        if (openGraphResult!!.title.isEmpty() && openGraphResult!!.description.isEmpty() && showNullOnEmpty) {
+        if (openGraphResult!!.title?.isEmpty() == true && openGraphResult!!.description?.isEmpty() == true && showNullOnEmpty) {
             launch(Dispatchers.Main) {
                 listener.onError("Null or empty response from the server")
             }
