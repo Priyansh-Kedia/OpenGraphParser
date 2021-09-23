@@ -1,3 +1,4 @@
+
 # OpenGraphParser
 [![](https://jitpack.io/v/Priyansh-Kedia/OpenGraphParser.svg)](https://jitpack.io/#Priyansh-Kedia/OpenGraphParser)
 
@@ -36,13 +37,14 @@ Add the dependency
 
 # Implementation
 
-    private val openGraphParser = OpenGraphParser(this, showNullOnEmpty = true)
+    private val openGraphParser = OpenGraphParser(this, showNullOnEmpty = true, context = this)
 	
 	openGraphParser.parse(linkUrl) // To parse the link provided
 
 The class required you to implement two callback functions, `onError(error: String)` and `onPostResponse(openGraphResult: OpenGraphResult)`. The former is invoked in case of error (incorrect url), and the latter is invoked on successful response. 
 
 The `showNullOnEmpty` is an optional parameter, with a default value of `false`. If set to `true`, the parser would invoke `onError` if the `title` and `description` are empty for the link provided.
+The `context` is also an optional parameter. If context is provided, then caching is implemented, and link preview can be generated faster.
 
 The data class ***OpenGraphResult*** contains:
 			
