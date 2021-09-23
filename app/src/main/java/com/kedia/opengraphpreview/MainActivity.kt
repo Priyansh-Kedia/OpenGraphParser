@@ -14,16 +14,20 @@ class MainActivity : AppCompatActivity(), OpenGraphCallback {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val openGraphParser = OpenGraphParser(this)
+        val openGraphParser = OpenGraphParser(this, context = this)
         openGraphParser.parse("https://www.youtube.com")
+
+        button.setOnClickListener {
+            openGraphParser.parse(tview.text.toString())
+        }
     }
 
     override fun onPostResponse(openGraphResult: OpenGraphResult) {
-        tview.text = openGraphResult.toString()
+        tview.setText(openGraphResult.toString())
     }
 
     override fun onError(error: String) {
         Log.e("TAG!!!!", "$error")
-        tview.text = error
+//        tview.text = error
     }
 }

@@ -1,6 +1,6 @@
 package com.kedia.ogparser
 
-import android.util.Log
+import android.content.Context
 import kotlinx.coroutines.*
 import org.jsoup.Jsoup
 import kotlin.coroutines.CoroutineContext
@@ -8,8 +8,11 @@ import kotlin.coroutines.CoroutineContext
 
 class OpenGraphParser(
     private val listener: OpenGraphCallback,
-    private var showNullOnEmpty: Boolean = false
+    private var showNullOnEmpty: Boolean = false,
+    private val context: Context? = null
 ) {
+
+    private val sharedPrefs: SharedPrefs? = context?.let { SharedPrefs(it) }
 
     private var url: String = ""
 
@@ -52,7 +55,9 @@ class OpenGraphParser(
         if (!url.contains("http")) {
             url = "http://$url"
         }
-
+        if (sharedPrefs?.urlExists(url) == true) {
+            return@withContext sharedPrefs?.getOpenGraphResult(url)
+        }
         openGraphResult = OpenGraphResult()
         try {
             val response = Jsoup.connect(url)
@@ -108,7 +113,7 @@ class OpenGraphParser(
             }
             return@withContext null
         }
-
+        openGraphResult?.let { sharedPrefs?.setOpenGraphResult(it, url) }
         return@withContext openGraphResult
     }
 }
