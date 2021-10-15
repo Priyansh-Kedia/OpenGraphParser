@@ -16,51 +16,51 @@ class SharedPrefs(context: Context) {
     private val SITE_NAME = OG_PARSER + "_site_name"
     private val TYPE = OG_PARSER + "_type"
 
-    fun setTitle(link: String, title: String) {
+    private fun setTitle(link: String, title: String) {
         pm.edit().putString(TITLE + "_$link", title).apply()
     }
 
-    fun getTitle(link: String): String {
+    private fun getTitle(link: String): String {
         return pm.getString(TITLE + "_$link", "") ?: ""
     }
 
-    fun setDescription(link: String, description: String) {
+    private fun setDescription(link: String, description: String) {
         pm.edit().putString(DESCRIPTION + "_$link", description).apply()
     }
 
-    fun getDescription(link: String): String {
+    private fun getDescription(link: String): String {
         return pm.getString(DESCRIPTION + "_$link", "") ?: ""
     }
 
-    fun setUrl(link: String, url: String) {
+    private fun setUrl(link: String, url: String) {
         pm.edit().putString(URL + "_$link", url).apply()
     }
 
-    fun getUrl(link: String): String {
+    private fun getUrl(link: String): String {
         return pm.getString(URL + "_$link", "") ?: ""
     }
 
-    fun setImage(link: String, image: String) {
+    private fun setImage(link: String, image: String) {
         pm.edit().putString(IMAGE + "_$link", image).apply()
     }
 
-    fun getImage(link: String): String {
+    private fun getImage(link: String): String {
         return pm.getString(IMAGE + "_$link", "") ?: ""
     }
 
-    fun setSiteName(link: String, siteName: String) {
+    private fun setSiteName(link: String, siteName: String) {
         pm.edit().putString(SITE_NAME + "_$link", siteName).apply()
     }
 
-    fun getSiteName(link: String): String {
+    private fun getSiteName(link: String): String {
         return pm.getString(SITE_NAME + "_$link", "") ?: ""
     }
 
-    fun setType(link: String, type: String) {
+    private fun setType(link: String, type: String) {
         pm.edit().putString(TYPE + "_$link", type).apply()
     }
 
-    fun getType(link: String): String {
+    private fun getType(link: String): String {
         return pm.getString(TYPE + "_$link", "") ?: ""
     }
 
