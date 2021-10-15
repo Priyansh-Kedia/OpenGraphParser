@@ -41,7 +41,7 @@ Add the dependency
 	
 	openGraphParser.parse(linkUrl) // To parse the link provided
 
-The class required you to implement two callback functions, `onError(error: String)` and `onPostResponse(openGraphResult: OpenGraphResult)`. The former is invoked in case of error (incorrect url), and the latter is invoked on successful response. 
+The class requires you to implement two callback functions, `onError(error: String)` and `onPostResponse(openGraphResult: OpenGraphResult)`. The former is invoked in case of error (incorrect url), and the latter is invoked on successful response. 
 
 The `showNullOnEmpty` is an optional parameter, with a default value of `false`. If set to `true`, the parser would invoke `onError` if the `title` and `description` are empty for the link provided.
 
