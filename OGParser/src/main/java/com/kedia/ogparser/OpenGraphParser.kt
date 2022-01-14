@@ -16,7 +16,9 @@ class OpenGraphParser(
 
     private var url: String = ""
 
+    private val AGENTS = mutableListOf<String>("Mozilla", "facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)")
     private val AGENT = "Mozilla"
+//    private val AGENT = "facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)"
     private val REFERRER = "http://www.google.com"
     private val TIMEOUT = 10000
     private val DOC_SELECT_QUERY = "meta[property^=og:]"
@@ -28,6 +30,8 @@ class OpenGraphParser(
     private val OG_TITLE = "og:title"
     private val OG_SITE_NAME = "og:site_name"
     private val OG_TYPE = "og:type"
+
+    private val jsoupNetworkCall = JsoupNetworkCall()
 
     private var openGraphResult: OpenGraphResult? = null
 
@@ -58,56 +62,16 @@ class OpenGraphParser(
         if (sharedPrefs?.urlExists(url) == true) {
             return@withContext sharedPrefs?.getOpenGraphResult(url)
         }
-        openGraphResult = OpenGraphResult()
-        try {
-            val response = Jsoup.connect(url)
-                .ignoreContentType(true)
-                .userAgent(AGENT)
-                .referrer(REFERRER)
-                .timeout(TIMEOUT)
-                .followRedirects(true)
-                .execute()
 
-            val doc = response.parse()
-
-            val ogTags = doc.select(DOC_SELECT_QUERY)
-            when {
-                ogTags.size > 0 ->
-                    ogTags.forEachIndexed { index, _ ->
-                        val tag = ogTags[index]
-                        val text = tag.attr(PROPERTY)
-
-                        when (text) {
-                            OG_IMAGE -> {
-                                openGraphResult!!.image = (tag.attr(OPEN_GRAPH_KEY))
-                            }
-                            OG_DESCRIPTION -> {
-                                openGraphResult!!.description = (tag.attr(OPEN_GRAPH_KEY))
-                            }
-                            OG_URL -> {
-                                openGraphResult!!.url = (tag.attr(OPEN_GRAPH_KEY))
-                            }
-                            OG_TITLE -> {
-                                openGraphResult!!.title = (tag.attr(OPEN_GRAPH_KEY))
-                            }
-                            OG_SITE_NAME -> {
-                                openGraphResult!!.siteName = (tag.attr(OPEN_GRAPH_KEY))
-                            }
-                            OG_TYPE -> {
-                                openGraphResult!!.type = (tag.attr(OPEN_GRAPH_KEY))
-                            }
-                        }
-                    }
+        AGENTS.forEach {
+            openGraphResult = jsoupNetworkCall.callUrl(url, it)
+            val isResultNull = checkNullParserResult(openGraphResult)
+            if (!isResultNull) {
+                return@forEach
             }
-        } catch (e: Exception) {
-            e.printStackTrace()
-            launch(Dispatchers.Main) {
-                listener.onError(e.localizedMessage)
-            }
-            return@withContext null
         }
 
-        if ((openGraphResult!!.title.isNullOrEmpty() || openGraphResult!!.title.equals("null")) && (openGraphResult!!.description.isNullOrEmpty() || openGraphResult!!.description.equals("null")) && showNullOnEmpty) {
+        if (checkNullParserResult(openGraphResult) && showNullOnEmpty) {
             launch(Dispatchers.Main) {
                 listener.onError("Null or empty response from the server")
             }

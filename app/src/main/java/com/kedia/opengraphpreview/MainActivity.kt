@@ -14,8 +14,8 @@ class MainActivity : AppCompatActivity(), OpenGraphCallback {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val openGraphParser = OpenGraphParser(this, context = this)
-        openGraphParser.parse("https://www.youtube.com")
+        val openGraphParser = OpenGraphParser(this, showNullOnEmpty = true)
+        openGraphParser.parse("https://twitter.com/levelsio/status/1481942293108359168")
 
         button.setOnClickListener {
             openGraphParser.parse(tview.text.toString())
@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity(), OpenGraphCallback {
     }
 
     override fun onPostResponse(openGraphResult: OpenGraphResult) {
+        Log.e("TAG!!!!", "response $openGraphResult")
         tview.setText(openGraphResult.toString())
     }
 
