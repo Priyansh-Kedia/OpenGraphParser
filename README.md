@@ -2,7 +2,7 @@
 # OpenGraphParser
 [![](https://jitpack.io/v/Priyansh-Kedia/OpenGraphParser.svg)](https://jitpack.io/#Priyansh-Kedia/OpenGraphParser)
 <a href="https://opensource.org/licenses/Apache-2.0"><img alt="License" src="https://img.shields.io/badge/License-Apache%202.0-blue.svg"/></a>
-
+<a href="https://proandroiddev.com/how-to-create-a-preview-for-a-link-in-android-6906d0aa9e12"><img alt="License" src="https://github.com/Priyansh-Kedia/OpenGraphParser/blob/og_tags_bug/images/Story-Medium.svg?raw=True"/></a>
 
 A small and easy to use library which provides the convenience of using [Open Graph Protocol](https://ogp.me/) in Android very easily. 
 Create previews for links to share in Android very easily.
