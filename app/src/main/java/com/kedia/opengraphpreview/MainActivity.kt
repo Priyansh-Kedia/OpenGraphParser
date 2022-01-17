@@ -21,8 +21,7 @@ class MainActivity : AppCompatActivity(), OpenGraphCallback {
         "https://chat.whatsapp.com/DdWAKRkt2VfAmd4OS47y7P",
         "https://www.reddit.com/r/MachineLearning/comments/s3mjqf/deep_learning_interviews_hundreds_of_fully_solved/?utm_medium=android_app&utm_source=share",
         "https://instagram.com/fcbarcelona?utm_medium=copy_link",
-        "https://www.facebook.com/groups/777946865955982/permalink/1385110621906267/",
-        "https://mobile.twitter.com/Twitter?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor"
+        "https://www.facebook.com/groups/777946865955982/permalink/1385110621906267/"
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
