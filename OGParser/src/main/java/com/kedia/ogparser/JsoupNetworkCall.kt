@@ -1,5 +1,6 @@
 package com.kedia.ogparser
 
+import android.util.Log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.jsoup.Jsoup
@@ -7,7 +8,7 @@ import org.jsoup.Jsoup
 class JsoupNetworkCall {
 
     private val REFERRER = "http://www.google.com"
-    private val TIMEOUT = 10000
+    private val TIMEOUT = 100000
     private val DOC_SELECT_QUERY = "meta[property^=og:]"
     private val OPEN_GRAPH_KEY = "content"
     private val PROPERTY = "property"
@@ -32,7 +33,6 @@ class JsoupNetworkCall {
                 .execute()
 
             val doc = response.parse()
-
             val ogTags = doc.select(DOC_SELECT_QUERY)
             when {
                 ogTags.size > 0 ->
@@ -64,10 +64,6 @@ class JsoupNetworkCall {
             }
         } catch (e: Exception) {
             e.printStackTrace()
-//            launch(Dispatchers.Main) {
-//                listener.onError(e.localizedMessage)
-//            }
-//            return@withContext null
             return null
         }
 

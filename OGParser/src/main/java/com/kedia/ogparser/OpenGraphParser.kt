@@ -1,36 +1,30 @@
 package com.kedia.ogparser
 
 import android.content.Context
+import android.util.Log
 import kotlinx.coroutines.*
-import org.jsoup.Jsoup
 import kotlin.coroutines.CoroutineContext
 
 
 class OpenGraphParser(
     private val listener: OpenGraphCallback,
     private var showNullOnEmpty: Boolean = false,
-    private val context: Context? = null
+    context: Context? = null
 ) {
 
     private val sharedPrefs: SharedPrefs? = context?.let { SharedPrefs(it) }
 
     private var url: String = ""
 
-    private val AGENTS = mutableListOf<String>("Mozilla", "facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)")
-    private val AGENT = "Mozilla"
-//    private val AGENT = "facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)"
-    private val REFERRER = "http://www.google.com"
-    private val TIMEOUT = 10000
-    private val DOC_SELECT_QUERY = "meta[property^=og:]"
-    private val OPEN_GRAPH_KEY = "content"
-    private val PROPERTY = "property"
-    private val OG_IMAGE = "og:image"
-    private val OG_DESCRIPTION = "og:description"
-    private val OG_URL = "og:url"
-    private val OG_TITLE = "og:title"
-    private val OG_SITE_NAME = "og:site_name"
-    private val OG_TYPE = "og:type"
-
+    private val AGENTS = mutableListOf(
+        "facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)",
+        "Mozilla",
+        "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36",
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36",
+        "WhatsApp/2.19.81 A",
+        "facebookexternalhit/1.1",
+        "facebookcatalog/1.0"
+    )
     private val jsoupNetworkCall = JsoupNetworkCall()
 
     private var openGraphResult: OpenGraphResult? = null
@@ -67,7 +61,8 @@ class OpenGraphParser(
             openGraphResult = jsoupNetworkCall.callUrl(url, it)
             val isResultNull = checkNullParserResult(openGraphResult)
             if (!isResultNull) {
-                return@forEach
+                openGraphResult?.let { sharedPrefs?.setOpenGraphResult(it, url) }
+                return@withContext openGraphResult
             }
         }
 
