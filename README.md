@@ -1,6 +1,7 @@
 
 # OpenGraphParser
 [![](https://jitpack.io/v/Priyansh-Kedia/OpenGraphParser.svg)](https://jitpack.io/#Priyansh-Kedia/OpenGraphParser)
+<a href="https://opensource.org/licenses/Apache-2.0"><img alt="License" src="https://img.shields.io/badge/License-Apache%202.0-blue.svg"/></a>
 
 
 A small and easy to use library which provides the convenience of using [Open Graph Protocol](https://ogp.me/) in Android very easily. 
