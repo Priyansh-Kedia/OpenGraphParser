@@ -1,33 +1,31 @@
 package com.kedia.ogparser
 
 import android.content.Context
+import android.util.Log
 import kotlinx.coroutines.*
-import org.jsoup.Jsoup
 import kotlin.coroutines.CoroutineContext
 
 
 class OpenGraphParser(
     private val listener: OpenGraphCallback,
     private var showNullOnEmpty: Boolean = false,
-    private val context: Context? = null
+    context: Context? = null
 ) {
 
     private val sharedPrefs: SharedPrefs? = context?.let { SharedPrefs(it) }
 
     private var url: String = ""
 
-    private val AGENT = "Mozilla"
-    private val REFERRER = "http://www.google.com"
-    private val TIMEOUT = 10000
-    private val DOC_SELECT_QUERY = "meta[property^=og:]"
-    private val OPEN_GRAPH_KEY = "content"
-    private val PROPERTY = "property"
-    private val OG_IMAGE = "og:image"
-    private val OG_DESCRIPTION = "og:description"
-    private val OG_URL = "og:url"
-    private val OG_TITLE = "og:title"
-    private val OG_SITE_NAME = "og:site_name"
-    private val OG_TYPE = "og:type"
+    private val AGENTS = mutableListOf(
+        "facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)",
+        "Mozilla",
+        "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36",
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36",
+        "WhatsApp/2.19.81 A",
+        "facebookexternalhit/1.1",
+        "facebookcatalog/1.0"
+    )
+    private val jsoupNetworkCall = JsoupNetworkCall()
 
     private var openGraphResult: OpenGraphResult? = null
 
@@ -58,56 +56,17 @@ class OpenGraphParser(
         if (sharedPrefs?.urlExists(url) == true) {
             return@withContext sharedPrefs?.getOpenGraphResult(url)
         }
-        openGraphResult = OpenGraphResult()
-        try {
-            val response = Jsoup.connect(url)
-                .ignoreContentType(true)
-                .userAgent(AGENT)
-                .referrer(REFERRER)
-                .timeout(TIMEOUT)
-                .followRedirects(true)
-                .execute()
 
-            val doc = response.parse()
-
-            val ogTags = doc.select(DOC_SELECT_QUERY)
-            when {
-                ogTags.size > 0 ->
-                    ogTags.forEachIndexed { index, _ ->
-                        val tag = ogTags[index]
-                        val text = tag.attr(PROPERTY)
-
-                        when (text) {
-                            OG_IMAGE -> {
-                                openGraphResult!!.image = (tag.attr(OPEN_GRAPH_KEY))
-                            }
-                            OG_DESCRIPTION -> {
-                                openGraphResult!!.description = (tag.attr(OPEN_GRAPH_KEY))
-                            }
-                            OG_URL -> {
-                                openGraphResult!!.url = (tag.attr(OPEN_GRAPH_KEY))
-                            }
-                            OG_TITLE -> {
-                                openGraphResult!!.title = (tag.attr(OPEN_GRAPH_KEY))
-                            }
-                            OG_SITE_NAME -> {
-                                openGraphResult!!.siteName = (tag.attr(OPEN_GRAPH_KEY))
-                            }
-                            OG_TYPE -> {
-                                openGraphResult!!.type = (tag.attr(OPEN_GRAPH_KEY))
-                            }
-                        }
-                    }
+        AGENTS.forEach {
+            openGraphResult = jsoupNetworkCall.callUrl(url, it)
+            val isResultNull = checkNullParserResult(openGraphResult)
+            if (!isResultNull) {
+                openGraphResult?.let { sharedPrefs?.setOpenGraphResult(it, url) }
+                return@withContext openGraphResult
             }
-        } catch (e: Exception) {
-            e.printStackTrace()
-            launch(Dispatchers.Main) {
-                listener.onError(e.localizedMessage)
-            }
-            return@withContext null
         }
 
-        if ((openGraphResult!!.title.isNullOrEmpty() || openGraphResult!!.title.equals("null")) && (openGraphResult!!.description.isNullOrEmpty() || openGraphResult!!.description.equals("null")) && showNullOnEmpty) {
+        if (checkNullParserResult(openGraphResult) && showNullOnEmpty) {
             launch(Dispatchers.Main) {
                 listener.onError("Null or empty response from the server")
             }
