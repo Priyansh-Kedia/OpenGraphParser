@@ -62,4 +62,28 @@ dependencies {
 //    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:${lifecycle_version}"
 }
 
-group = 'com.github.Priyansh-Kedia'
+afterEvaluate {
+    publishing {
+        publications {
+            // Creates a Maven publication called "release".
+            release(MavenPublication) {
+                // Applies the component for the release build variant.
+                from components.release
+
+                // You can then customize attributes of the publication as shown below.
+                groupId = 'com.github.Priyansh-Kedia'
+                artifactId = 'final'
+                version = '2.5.3'
+            }
+            // Creates a Maven publication called “debug”.
+            debug(MavenPublication) {
+                // Applies the component for the debug build variant.
+                from components.debug
+
+                groupId = 'com.github.Priyansh-Kedia'
+                artifactId = 'final-debug'
+                version = '2.5.3'
+            }
+        }
+    }
+}
