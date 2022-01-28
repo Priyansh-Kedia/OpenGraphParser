@@ -4,7 +4,6 @@ plugins {
     id 'maven-publish'
 }
 
-group = 'com.github.Priyansh-Kedia'
 
 android {
     compileSdkVersion 30
@@ -62,3 +61,5 @@ dependencies {
 //    implementation "androidx.lifecycle:lifecycle-extensions:${lifecycle_version}"
 //    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:${lifecycle_version}"
 }
+
+group = 'com.github.Priyansh-Kedia'
