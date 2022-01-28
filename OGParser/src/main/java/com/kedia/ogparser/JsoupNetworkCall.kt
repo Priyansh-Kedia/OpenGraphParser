@@ -61,8 +61,6 @@ class JsoupNetworkCall {
                     }
             }
 
-            Log.e("TAG!!!!!", "result ${doc.select("meta[name=description]").first().attr("content")} ${checkNullParserResult(openGraphResult)}")
-
             if (openGraphResult!!.title.isNullOrEmpty())
                 openGraphResult!!.title = doc.title()
             if (openGraphResult!!.description.isNullOrEmpty())
