@@ -4,6 +4,8 @@ plugins {
     id 'maven-publish'
 }
 
+group = 'com.github.Priyansh-Kedia'
+
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
