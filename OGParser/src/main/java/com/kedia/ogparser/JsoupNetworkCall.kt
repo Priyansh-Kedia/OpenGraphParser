@@ -1,8 +1,6 @@
 package com.kedia.ogparser
 
 import android.util.Log
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import org.jsoup.Jsoup
 
 class JsoupNetworkCall {
@@ -62,6 +60,17 @@ class JsoupNetworkCall {
                         }
                     }
             }
+
+            if (openGraphResult!!.title.isNullOrEmpty())
+                openGraphResult!!.title = doc.title()
+            if (openGraphResult!!.description.isNullOrEmpty())
+                openGraphResult!!.description = if (doc.select("meta[name=description]").size != 0) doc.select("meta[name=description]")
+                    .first().attr("content") else ""
+            if (openGraphResult!!.url.isNullOrEmpty())
+                openGraphResult!!.url = getBaseUrl(url)
+
+
+
         } catch (e: Exception) {
             e.printStackTrace()
             return null
