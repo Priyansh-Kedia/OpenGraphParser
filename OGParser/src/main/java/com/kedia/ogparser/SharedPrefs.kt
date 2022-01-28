@@ -91,7 +91,7 @@ class SharedPrefs(context: Context) {
         return title.isNotEmpty() &&
                  title.equals("null").not() &&
                 description.isNotEmpty() &&
-                description.equals("null").not() //&&
+                description.equals("null").not() &&
                 image.isNotEmpty() &&
                 image.equals("null").not()
     }
