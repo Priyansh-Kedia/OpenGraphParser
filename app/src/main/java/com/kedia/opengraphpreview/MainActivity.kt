@@ -10,7 +10,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), OpenGraphCallback {
 
-    private val openGraphParser by lazy { OpenGraphParser(this, showNullOnEmpty = true, context = this) }
+    private val openGraphParser by lazy { OpenGraphParser(this, showNullOnEmpty = true) }
 
     private val LINKS_TO_TEST = mutableListOf(
         "https://www.linkedin.com/posts/madhusmita-padhy_machinelearning-datascience-activity-6886390508722163712-yhQ0",
