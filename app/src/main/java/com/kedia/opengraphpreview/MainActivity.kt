@@ -13,17 +13,17 @@ class MainActivity : AppCompatActivity(), OpenGraphCallback {
     private val openGraphParser by lazy { OpenGraphParser(this, showNullOnEmpty = true, context = this) }
 
     private val LINKS_TO_TEST = mutableListOf(
-//        "https://www.linkedin.com/posts/madhusmita-padhy_machinelearning-datascience-activity-6886390508722163712-yhQ0",
-//        "https://www.youtube.com/watch?v=n3zsoX7bRlc",
-//        "https://twitter.com/levelsio/status/1481942293108359168",
-//        "https://stackoverflow.com/questions/44515769/conda-is-not-recognized-as-internal-or-external-command",
-//        "https://github.com/Priyansh-Kedia/OpenGraphParser",
-//        "https://chat.whatsapp.com/DdWAKRkt2VfAmd4OS47y7P",
-//        "https://www.reddit.com/r/MachineLearning/comments/s3mjqf/deep_learning_interviews_hundreds_of_fully_solved/?utm_medium=android_app&utm_source=share",
-//        "https://instagram.com/fcbarcelona?utm_medium=copy_link",
-//        "https://www.facebook.com/groups/777946865955982/permalink/1385110621906267/",
-//        "https://www.youtube.com/",
-//        "https://www.instagram.com/",
+        "https://www.linkedin.com/posts/madhusmita-padhy_machinelearning-datascience-activity-6886390508722163712-yhQ0",
+        "https://www.youtube.com/watch?v=n3zsoX7bRlc",
+        "https://twitter.com/levelsio/status/1481942293108359168",
+        "https://stackoverflow.com/questions/44515769/conda-is-not-recognized-as-internal-or-external-command",
+        "https://github.com/Priyansh-Kedia/OpenGraphParser",
+        "https://chat.whatsapp.com/DdWAKRkt2VfAmd4OS47y7P",
+        "https://www.reddit.com/r/MachineLearning/comments/s3mjqf/deep_learning_interviews_hundreds_of_fully_solved/?utm_medium=android_app&utm_source=share",
+        "https://instagram.com/fcbarcelona?utm_medium=copy_link",
+        "https://www.facebook.com/groups/777946865955982/permalink/1385110621906267/",
+        "https://www.youtube.com/",
+        "https://www.instagram.com/",
         "https://klusterapp.io/kluster/message?message_id=7244&channel_id=2247&Channel_name=new-channel-with-spa&kluster_id=64"
     )
 

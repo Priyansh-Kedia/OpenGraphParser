@@ -68,9 +68,6 @@ class JsoupNetworkCall {
                     .first().attr("content") else ""
             if (openGraphResult!!.url.isNullOrEmpty())
                 openGraphResult!!.url = getBaseUrl(url)
-
-
-
         } catch (e: Exception) {
             e.printStackTrace()
             return null
