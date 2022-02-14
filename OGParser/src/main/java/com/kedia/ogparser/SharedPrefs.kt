@@ -2,6 +2,7 @@ package com.kedia.ogparser
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import androidx.preference.PreferenceManager
 
 class SharedPrefs(context: Context) {
@@ -87,8 +88,12 @@ class SharedPrefs(context: Context) {
         val title = getTitle(url)
         val description = getDescription(url)
         val image = getImage(url)
-
-        return title.isNotEmpty() && description.isNotEmpty() && image.isNotEmpty()
+        return title.isNotEmpty() &&
+                 title.equals("null").not() &&
+                description.isNotEmpty() &&
+                description.equals("null").not() &&
+                image.isNotEmpty() &&
+                image.equals("null").not()
     }
 
 }

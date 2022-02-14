@@ -21,7 +21,10 @@ class MainActivity : AppCompatActivity(), OpenGraphCallback {
         "https://chat.whatsapp.com/DdWAKRkt2VfAmd4OS47y7P",
         "https://www.reddit.com/r/MachineLearning/comments/s3mjqf/deep_learning_interviews_hundreds_of_fully_solved/?utm_medium=android_app&utm_source=share",
         "https://instagram.com/fcbarcelona?utm_medium=copy_link",
-        "https://www.facebook.com/groups/777946865955982/permalink/1385110621906267/"
+        "https://www.facebook.com/groups/777946865955982/permalink/1385110621906267/",
+        "https://www.youtube.com/",
+        "https://www.instagram.com/",
+        "https://klusterapp.io/kluster/message?message_id=7244&channel_id=2247&Channel_name=new-channel-with-spa&kluster_id=64"
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
