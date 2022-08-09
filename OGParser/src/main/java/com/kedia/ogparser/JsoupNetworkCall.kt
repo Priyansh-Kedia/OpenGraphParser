@@ -1,6 +1,5 @@
 package com.kedia.ogparser
 
-import android.util.Log
 import org.jsoup.Jsoup
 
 class JsoupNetworkCall {

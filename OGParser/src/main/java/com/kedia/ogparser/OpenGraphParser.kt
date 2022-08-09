@@ -5,7 +5,6 @@ import android.util.Log
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
-
 class OpenGraphParser(
     private val listener: OpenGraphCallback,
     private var showNullOnEmpty: Boolean = false,
