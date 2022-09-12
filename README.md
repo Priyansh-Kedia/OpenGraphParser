@@ -3,7 +3,8 @@
 [![](https://jitpack.io/v/Priyansh-Kedia/OpenGraphParser.svg)](https://jitpack.io/#Priyansh-Kedia/OpenGraphParser)
  <a href="https://devlibrary.withgoogle.com/products/android/repos/Priyansh-Kedia-OpenGraphParser"><img alt="Google" src="https://raw.githubusercontent.com/Priyansh-Kedia/OpenGraphParser/612637f6e864ac874cd1dd5071db8ee9e2e971eb/images/google-devlib.svg"/></a>
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-<a href="https://proandroiddev.com/how-to-create-a-preview-for-a-link-in-android-6906d0aa9e12"><img alt="License" src="https://github.com/Priyansh-Kedia/OpenGraphParser/blob/og_tags_bug/images/Story-Medium.svg?raw=True"/></a>
+<a 
+href="https://proandroiddev.com/how-to-create-a-preview-for-a-link-in-android-6906d0aa9e12"><img alt="ProAndroidDev" src="https://raw.githubusercontent.com/Priyansh-Kedia/OpenGraphParser/master/images/Story-Medium.svg"/></a>
 
 A small and easy to use library which provides the convenience of using [Open Graph Protocol](https://ogp.me/) in Android very easily. 
 Create previews for links to share in Android very easily.
