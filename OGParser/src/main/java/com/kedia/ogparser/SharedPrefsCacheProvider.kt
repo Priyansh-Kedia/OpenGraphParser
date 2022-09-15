@@ -74,7 +74,7 @@ class SharedPrefsCacheProvider(context: Context) : CacheProvider {
                 image.equals("null").not()
     }
 
-    override fun setOpenGraphResult(openGraphResult: OpenGraphResult, url: String) {
+    override suspend fun setOpenGraphResult(openGraphResult: OpenGraphResult, url: String) {
         setTitle(url, openGraphResult.title.toString())
         setDescription(url, openGraphResult.description.toString())
         setImage(url, openGraphResult.image.toString())
@@ -83,7 +83,7 @@ class SharedPrefsCacheProvider(context: Context) : CacheProvider {
         setUrl(url, openGraphResult.url.toString())
     }
 
-    override fun getOpenGraphResult(url: String): OpenGraphResult? {
+    override suspend fun getOpenGraphResult(url: String): OpenGraphResult? {
         val title = getTitle(url)
         val description = getDescription(url)
         val image = getImage(url)
