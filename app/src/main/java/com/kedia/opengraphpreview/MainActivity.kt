@@ -6,11 +6,18 @@ import androidx.appcompat.app.AppCompatActivity
 import com.kedia.ogparser.OpenGraphCallback
 import com.kedia.ogparser.OpenGraphParser
 import com.kedia.ogparser.OpenGraphResult
+import com.kedia.ogparser.SharedPrefsCacheProvider
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), OpenGraphCallback {
 
-    private val openGraphParser by lazy { OpenGraphParser(this, showNullOnEmpty = true) }
+    private val openGraphParser by lazy {
+        OpenGraphParser(
+            listener = this,
+            showNullOnEmpty = true,
+            cacheProvider = SharedPrefsCacheProvider(this)
+        )
+    }
 
     private val LINKS_TO_TEST = mutableListOf(
         "https://www.linkedin.com/posts/madhusmita-padhy_machinelearning-datascience-activity-6886390508722163712-yhQ0",
