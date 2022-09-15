@@ -9,13 +9,6 @@ class OpenGraphCacheProvider(context: Context) : CacheProvider {
 
     private val pm: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 
-    private val OG_PARSER = "Og_Parser"
-    private val TITLE = OG_PARSER + "_title"
-    private val DESCRIPTION = OG_PARSER + "_description"
-    private val URL = OG_PARSER + "_url"
-    private val IMAGE = OG_PARSER + "_image"
-    private val SITE_NAME = OG_PARSER + "_site_name"
-    private val TYPE = OG_PARSER + "_type"
 
     private fun setTitle(link: String, title: String) {
         pm.edit().putString(TITLE + "_$link", title).apply()
@@ -67,11 +60,11 @@ class OpenGraphCacheProvider(context: Context) : CacheProvider {
 
     private fun urlExists(title: String, description: String, image: String): Boolean {
         return title.isNotEmpty() &&
-                title.equals("null").not() &&
+                title != "null" &&
                 description.isNotEmpty() &&
-                description.equals("null").not() &&
+                title != "null" &&
                 image.isNotEmpty() &&
-                image.equals("null").not()
+                title != "null"
     }
 
     override suspend fun setOpenGraphResult(openGraphResult: OpenGraphResult, url: String) {
@@ -96,5 +89,15 @@ class OpenGraphCacheProvider(context: Context) : CacheProvider {
         val type = getType(url)
         val url = getUrl(url)
         return OpenGraphResult(title, description, url, image, siteName, type)
+    }
+
+    companion object {
+        private const val OG_PARSER = "Og_Parser"
+        private const val TITLE = OG_PARSER + "_title"
+        private const val DESCRIPTION = OG_PARSER + "_description"
+        private const val URL = OG_PARSER + "_url"
+        private const val IMAGE = OG_PARSER + "_image"
+        private const val SITE_NAME = OG_PARSER + "_site_name"
+        private const val TYPE = OG_PARSER + "_type"
     }
 }
