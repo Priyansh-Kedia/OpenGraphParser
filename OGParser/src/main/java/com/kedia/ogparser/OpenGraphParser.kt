@@ -8,11 +8,8 @@ import kotlin.coroutines.CoroutineContext
 class OpenGraphParser(
     private val listener: OpenGraphCallback,
     private var showNullOnEmpty: Boolean = false,
-    context: Context? = null
+    private val cacheProvider: CacheProvider? = null
 ) {
-
-    private val sharedPrefs: SharedPrefs? = context?.let { SharedPrefs(it) }
-
     private var url: String = ""
 
     private val AGENTS = mutableListOf(
@@ -52,15 +49,16 @@ class OpenGraphParser(
         if (!url.contains("http")) {
             url = "http://$url"
         }
-        if (sharedPrefs?.urlExists(url) == true) {
-            return@withContext sharedPrefs?.getOpenGraphResult(url)
+
+        cacheProvider?.getOpenGraphResult(url)?.let {
+            return@withContext it
         }
 
         AGENTS.forEach {
             openGraphResult = jsoupNetworkCall.callUrl(url, it)
             val isResultNull = checkNullParserResult(openGraphResult)
             if (!isResultNull) {
-                openGraphResult?.let { sharedPrefs?.setOpenGraphResult(it, url) }
+                openGraphResult?.let { cacheProvider?.setOpenGraphResult(it, url) }
                 return@withContext openGraphResult
             }
         }
@@ -71,7 +69,7 @@ class OpenGraphParser(
             }
             return@withContext null
         }
-        openGraphResult?.let { sharedPrefs?.setOpenGraphResult(it, url) }
+        openGraphResult?.let { cacheProvider?.setOpenGraphResult(it, url) }
         return@withContext openGraphResult
     }
 }

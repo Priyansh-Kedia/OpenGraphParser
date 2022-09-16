@@ -5,7 +5,7 @@ import android.content.SharedPreferences
 import android.util.Log
 import androidx.preference.PreferenceManager
 
-class SharedPrefs(context: Context) {
+class OpenGraphCacheProvider(context: Context) : CacheProvider {
 
     private val pm: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 
@@ -65,7 +65,16 @@ class SharedPrefs(context: Context) {
         return pm.getString(TYPE + "_$link", "") ?: ""
     }
 
-    fun setOpenGraphResult(openGraphResult: OpenGraphResult, url: String) {
+    private fun urlExists(title: String, description: String, image: String): Boolean {
+        return title.isNotEmpty() &&
+                title.equals("null").not() &&
+                description.isNotEmpty() &&
+                description.equals("null").not() &&
+                image.isNotEmpty() &&
+                image.equals("null").not()
+    }
+
+    override suspend fun setOpenGraphResult(openGraphResult: OpenGraphResult, url: String) {
         setTitle(url, openGraphResult.title.toString())
         setDescription(url, openGraphResult.description.toString())
         setImage(url, openGraphResult.image.toString())
@@ -74,26 +83,18 @@ class SharedPrefs(context: Context) {
         setUrl(url, openGraphResult.url.toString())
     }
 
-    fun getOpenGraphResult(url: String): OpenGraphResult {
+    override suspend fun getOpenGraphResult(url: String): OpenGraphResult? {
         val title = getTitle(url)
         val description = getDescription(url)
         val image = getImage(url)
+
+        if (!urlExists(title, description, image)) {
+            return null
+        }
+
         val siteName = getSiteName(url)
         val type = getType(url)
         val url = getUrl(url)
         return OpenGraphResult(title, description, url, image, siteName, type)
     }
-
-    fun urlExists(url: String): Boolean {
-        val title = getTitle(url)
-        val description = getDescription(url)
-        val image = getImage(url)
-        return title.isNotEmpty() &&
-                 title.equals("null").not() &&
-                description.isNotEmpty() &&
-                description.equals("null").not() &&
-                image.isNotEmpty() &&
-                image.equals("null").not()
-    }
-
 }
