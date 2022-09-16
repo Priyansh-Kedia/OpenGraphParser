@@ -73,7 +73,7 @@ afterEvaluate {
                 // You can then customize attributes of the publication as shown below.
                 groupId = 'com.github.Priyansh-Kedia'
                 artifactId = 'final'
-                version = '2.5.3'
+                version = '2.5.5'
             }
 //            // Creates a Maven publication called “debug”.
 //            debug(MavenPublication) {
