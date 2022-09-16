@@ -1,12 +1,12 @@
 
 # OpenGraphParser
 [![](https://jitpack.io/v/Priyansh-Kedia/OpenGraphParser.svg)](https://jitpack.io/#Priyansh-Kedia/OpenGraphParser)
- <a href="https://devlibrary.withgoogle.com/products/android/repos/Priyansh-Kedia-OpenGraphParser"><img alt="Google" src="https://raw.githubusercontent.com/Priyansh-Kedia/OpenGraphParser/612637f6e864ac874cd1dd5071db8ee9e2e971eb/images/google-devlib.svg"/></a>
+<a href="https://devlibrary.withgoogle.com/products/android/repos/Priyansh-Kedia-OpenGraphParser"><img alt="Google" src="https://raw.githubusercontent.com/Priyansh-Kedia/OpenGraphParser/612637f6e864ac874cd1dd5071db8ee9e2e971eb/images/google-devlib.svg"/></a>
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-<a 
+<a
 href="https://proandroiddev.com/how-to-create-a-preview-for-a-link-in-android-6906d0aa9e12"><img alt="ProAndroidDev" src="https://raw.githubusercontent.com/Priyansh-Kedia/OpenGraphParser/master/images/Story-Medium.svg"/></a>
 
-A small and easy to use library which provides the convenience of using [Open Graph Protocol](https://ogp.me/) in Android very easily. 
+A small and easy to use library which provides the convenience of using [Open Graph Protocol](https://ogp.me/) in Android very easily.
 Create previews for links to share in Android very easily.
 
 
@@ -44,27 +44,20 @@ Add the dependency
 
 # Implementation
 
-    private val openGraphParser = OpenGraphParser(this, showNullOnEmpty = true, context = this)
+    private val openGraphParser = OpenGraphParser(this, showNullOnEmpty = true, cacheProvider = OpenGraphCacheProvider(this))
 	
 	openGraphParser.parse(linkUrl) // To parse the link provided
 
-The class requires you to implement two callback functions, `onError(error: String)` and `onPostResponse(openGraphResult: OpenGraphResult)`. The former is invoked in case of error (incorrect url), and the latter is invoked on successful response. 
+The class requires you to implement two callback functions,`onError(error: String)` and `onPostResponse(openGraphResult: OpenGraphResult)`. The former is invoked in case of error (incorrect url), and the latter is invoked on successful response.
 
 The `showNullOnEmpty` is an optional parameter, with a default value of `false`. If set to `true`, the parser would invoke `onError` if the `title` and `description` are empty for the link provided.
 
-The `context` is also an optional parameter. If context is provided, then caching is implemented, and link preview can be generated faster.
+The `cacheProvider` is also an optional parameter.  It can be passed in two ways :-
+1. The default `OpenGraphCacheProvider`, which implements `SharedPreferences` from the library itself.
+2. A custom Shared Preferences class which should implement the interface `CacheProvider`.  The `CacheProvider` interface provides two callback functions `getOpenGraphResult` and `setOpenGraphResult`, where `getOpenGraphResult` is used to write to the cache, and `setOpenGraphResult` is used to read from the cache.
 
-The data class ***OpenGraphResult*** contains:
-			
 
- - title -> The title of the page the link points to
- - description -> The description metadata of the page
- - url -> The url of the page
- - image -> The image metadata for the page
- - siteName -> The name of the website (BASE URL).
- - type -> The type of the object e.g., "video.movie".
-
-Inside `onPostResponse(openGraphResult: OpenGraphResult)` you can use the data to show on your UI like this. 
+Inside `onPostResponse(openGraphResult: OpenGraphResult)` you can use the data to show on your UI like this.
 
     override fun onPostResponse(openGraphResult: OpenGraphResult) {  
     	linkPreviewLayout.apply {  
@@ -73,6 +66,15 @@ Inside `onPostResponse(openGraphResult: OpenGraphResult)` you can use the data t
 			linkDescription.text = openGraphResult.description  
 			website.text = openGraphResult.siteName  
 	 	}}
+
+## OpenGraphResult class
+The data class ***OpenGraphResult*** contains:
+- title -> The title of the page the link points to
+- description -> The description metadata of the page
+- url -> The url of the page
+- image -> The image metadata for the page
+- siteName -> The name of the website (BASE URL).
+- type -> The type of the object e.g., "video.movie".
 
 
 # Contributions
