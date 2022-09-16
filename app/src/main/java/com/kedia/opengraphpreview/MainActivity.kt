@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.kedia.ogparser.OpenGraphCallback
 import com.kedia.ogparser.OpenGraphParser
 import com.kedia.ogparser.OpenGraphResult
-import com.kedia.ogparser.SharedPrefsCacheProvider
+import com.kedia.ogparser.OpenGraphCacheProvider
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), OpenGraphCallback {
@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity(), OpenGraphCallback {
         OpenGraphParser(
             listener = this,
             showNullOnEmpty = true,
-            cacheProvider = SharedPrefsCacheProvider(this)
+            cacheProvider = OpenGraphCacheProvider(this)
         )
     }
 

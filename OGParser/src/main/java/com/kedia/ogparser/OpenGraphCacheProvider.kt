@@ -5,7 +5,7 @@ import android.content.SharedPreferences
 import android.util.Log
 import androidx.preference.PreferenceManager
 
-class SharedPrefsCacheProvider(context: Context) : CacheProvider {
+class OpenGraphCacheProvider(context: Context) : CacheProvider {
 
     private val pm: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 
