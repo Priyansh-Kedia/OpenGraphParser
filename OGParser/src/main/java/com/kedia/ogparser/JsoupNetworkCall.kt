@@ -5,7 +5,7 @@ import org.jsoup.Jsoup
 
 /**
  * @param timeout - Timeout for requests, specified in milliseconds (default - 60000)
- * @param jsoupProxy - Specify proxy for requests
+ * @param jsoupProxy - Specify proxy for requests (host, port)
  * @param maxBodySize - The maximum size to fetch for body
  */
 
