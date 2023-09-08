@@ -98,17 +98,18 @@ Inside `onPostResponse(openGraphResult: OpenGraphResult)` you can use the data t
 
 ## OpenGraphResult class
 The data class ***OpenGraphResult*** contains:
-	- title -> The title of the page the link points to
-	 - description -> The description metadata of the page
-	 - url -> The url of the page
-	 - image -> The image metadata for the page
-	 - siteName -> The name of the website (BASE URL).
-	 - type -> The type of the object e.g., "video.movie".
+
+ - title -> The title of the page the link points to
+ - description -> The description metadata of the page
+ - url -> The url of the page
+ - image -> The image metadata for the page
+ - siteName -> The name of the website (BASE URL).
+ - type -> The type of the object e.g., "video.movie".
 
 ## JsoupProxy class
 The data class ***JsoupProxy*** contains: 
-	- host -> The host for the proxy
-	- port -> The port for the proxy
+- host -> The host for the proxy
+- port -> The port for the proxy
 
 
 # Contributions
