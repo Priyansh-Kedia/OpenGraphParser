@@ -1,19 +1,34 @@
 package com.kedia.ogparser
 
+import android.util.Log
 import org.jsoup.Jsoup
 
-class JsoupNetworkCall {
+/**
+ * @param timeout - Timeout for requests, specified in milliseconds (default - 60000)
+ * @param jsoupProxy - Specify proxy for requests (host, port)
+ * @param maxBodySize - The maximum size to fetch for body
+ */
+
+class JsoupNetworkCall(
+    private val timeout: Int? = DEFAULT_TIMEOUT,
+    private val jsoupProxy: JsoupProxy? = null,
+    private val maxBodySize: Int? = null
+) {
 
     fun callUrl(url: String, agent: String): OpenGraphResult? {
         val openGraphResult = OpenGraphResult()
         try {
-            val response = Jsoup.connect(url)
+            val connection = Jsoup.connect(url)
                 .ignoreContentType(true)
                 .userAgent(agent)
                 .referrer(REFERRER)
-                .timeout(TIMEOUT)
+                .timeout(timeout ?: DEFAULT_TIMEOUT)
                 .followRedirects(true)
-                .execute()
+
+            jsoupProxy?.let { connection.proxy(it.host, it.port) }
+            maxBodySize?.let { connection.maxBodySize(it) }
+
+            val response = connection.execute()
 
             val doc = response.parse()
             val ogTags = doc.select(DOC_SELECT_OGTAGS)
@@ -63,11 +78,14 @@ class JsoupNetworkCall {
 
     companion object {
         private const val REFERRER = "http://www.google.com"
-        private const val TIMEOUT = 100000
+        private const val DEFAULT_TIMEOUT = 60000
+
         private const val DOC_SELECT_OGTAGS = "meta[property^=og:]"
         private const val DOC_SELECT_DESCRIPTION = "meta[name=description]"
+
         private const val OPEN_GRAPH_KEY = "content"
         private const val PROPERTY = "property"
+
         private const val OG_IMAGE = "og:image"
         private const val OG_DESCRIPTION = "og:description"
         private const val OG_URL = "og:url"
