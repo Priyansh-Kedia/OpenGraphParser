@@ -1,4 +1,5 @@
 
+
 # OpenGraphParser
 [![](https://jitpack.io/v/Priyansh-Kedia/OpenGraphParser.svg)](https://jitpack.io/#Priyansh-Kedia/OpenGraphParser)
  <a href="https://devlibrary.withgoogle.com/products/android/repos/Priyansh-Kedia-OpenGraphParser"><img alt="Google" src="https://raw.githubusercontent.com/Priyansh-Kedia/OpenGraphParser/master/images/google-devlib.svg"/>
@@ -57,6 +58,8 @@ or you can use the Builder to create the instance of the class if you need to sp
 	        .timeout(1000000)
 	        .jsoupProxy(JsoupProxy("<host>", 8000))
 	        .build()
+
+> Note: All values can be specified using the default constructor also
 
 Values that can be specified using the Builder pattern are
 
